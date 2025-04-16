@@ -15,6 +15,7 @@ const state = reactive({
 })
 const form = ref()
 const isLoggingIn = ref(false)
+const showPassword = ref(false)
 
 const handleLogin = async () => {
     form.value.clear()
@@ -22,7 +23,7 @@ const handleLogin = async () => {
 
     try {
         await login(state)
-        // await navigateTo(localePath('/'))
+        await navigateTo('/')
     }
     catch (err) {
         const error = handleApiError(err)
@@ -30,7 +31,7 @@ const handleLogin = async () => {
             const errors = formatAPIErrors(err.data.errors)
             errors.push({
                 message: err.data.errors['email'][0],
-                path: 'password',
+                name: 'password',
             })
             form.value.setErrors(errors)
         }
@@ -40,9 +41,16 @@ const handleLogin = async () => {
     }
 }
 
-const onSubmit = () => {
-    console.log('login')
-}
+onMounted(async () => {
+    try {
+        await refreshIdentity()
+        if (user.value) {
+            await navigateTo('/')
+        }
+    } catch (err) {
+        console.error(err)
+    }
+})
 </script>
 
 <template>
@@ -50,10 +58,12 @@ const onSubmit = () => {
         <h1 class="text-xl lg:2xl text-primary font-semibold text-center mb-8">Login</h1>
 
         <UCard class="w-full max-w-xl mx-auto rounded-xl">
-            <UForm :state="state" class="space-y-4" @submit="onSubmit">
+            <UForm ref="form" :state="state" class="space-y-4" @submit="handleLogin" @keydown.enter="handleLogin">
                 <UFormField label="Email" name="email">
                     <UInput
                         v-model="state.email"
+                        type="email"
+                        autocomplete="email"
                         placeholder="Enter your email"
                         icon="i-lucide-at-sign"
                         :ui="{root: 'w-full'}"
@@ -63,15 +73,29 @@ const onSubmit = () => {
                 <UFormField label="Password" name="password">
                     <UInput
                         v-model="state.password"
-                        type="password"
+                        :type="showPassword ? 'text' : 'password'"
+                        autocomplete="current-password"
                         placeholder="Enter your password"
                         icon="i-lucide-key-round"
-                        :ui="{root: 'w-full'}"
-                    />
+                        :ui="{root: 'w-full', trailing: 'pe-1'}"
+                    >
+                        <template #trailing>
+                            <UButton
+                                color="neutral"
+                                variant="link"
+                                size="sm"
+                                :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                                :aria-pressed="showPassword"
+                                aria-controls="password"
+                                @click="showPassword = !showPassword"
+                            />
+                        </template>
+                    </UInput>
                 </UFormField>
 
                 <div class="flex justify-between items-center space-x-4">
-                    <UButton type="submit" size="md">
+                    <UButton type="submit" size="md" :loading="isLoggingIn">
                         Login
                     </UButton>
                     <div class="inline-flex items-center">

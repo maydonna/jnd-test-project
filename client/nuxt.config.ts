@@ -10,6 +10,17 @@ export default defineNuxtConfig({
     ],
 
     sanctum: {
-        baseUrl: 'http://localhost:8000', // Laravel API
+        baseUrl: 'http://localhost:8000/api', // Laravel API
+        endpoints: {
+            user: '/user/me'
+        }
     },
+
+    vite: {
+        server: {
+            proxy: {
+                '/api': 'http://localhost:8000'
+            }
+        }
+    }
 })
