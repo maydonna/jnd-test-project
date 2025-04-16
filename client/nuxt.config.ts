@@ -16,11 +16,11 @@ export default defineNuxtConfig({
         }
     },
 
-    vite: {
-        server: {
-            proxy: {
-                '/api': 'http://localhost:8000'
-            }
-        }
-    }
+    // vite: {
+    //     server: {
+    //         proxy: {
+    //             '/api': 'http://localhost:8000'
+    //         }
+    //     }
+    // }
 })

@@ -14,12 +14,10 @@ const state = reactive({
     remember: false,
 })
 const form = ref()
-const isLoggingIn = ref(false)
 const showPassword = ref(false)
 
 const handleLogin = async () => {
     form.value.clear()
-    isLoggingIn.value = true
 
     try {
         await login(state)
@@ -37,7 +35,6 @@ const handleLogin = async () => {
         }
 
         errorToast(err.data.message)
-        isLoggingIn.value = false
     }
 }
 
@@ -66,7 +63,6 @@ onMounted(async () => {
                         autocomplete="email"
                         placeholder="Enter your email"
                         icon="i-lucide-at-sign"
-                        :ui="{root: 'w-full'}"
                     />
                 </UFormField>
 
@@ -77,7 +73,7 @@ onMounted(async () => {
                         autocomplete="current-password"
                         placeholder="Enter your password"
                         icon="i-lucide-key-round"
-                        :ui="{root: 'w-full', trailing: 'pe-1'}"
+                        :ui="{trailing: 'pe-1'}"
                     >
                         <template #trailing>
                             <UButton
@@ -95,7 +91,7 @@ onMounted(async () => {
                 </UFormField>
 
                 <div class="flex justify-between items-center space-x-4">
-                    <UButton type="submit" size="md" :loading="isLoggingIn">
+                    <UButton type="submit" size="md" loading-auto>
                         Login
                     </UButton>
                     <div class="inline-flex items-center">
