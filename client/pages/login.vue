@@ -96,7 +96,7 @@ onMounted(async () => {
                     </UButton>
                     <div class="inline-flex items-center">
                         <span>Don't have account?</span>
-                        <UButton color="primary" variant="link" to="/register">Register</UButton>
+                        <UButton color="primary" variant="link" to="/register">Sign Up</UButton>
                     </div>
                 </div>
             </UForm>

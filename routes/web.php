@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\RegisterUserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 

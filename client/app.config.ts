@@ -9,6 +9,17 @@ export default defineAppConfig({
             slots: {
                 base: 'hover:cursor-pointer'
             }
+        },
+        avatar: {
+            slots: {
+                root: 'bg-(--ui-primary)/30 stroke-(--ui-primary)',
+                fallback: 'text-(--ui-neutral)'
+            }
+        },
+        popover: {
+            slots: {
+                content: 'bg-(--ui-bg-elevated)'
+            }
         }
     }
 })

@@ -111,7 +111,7 @@ const handleRegister = async () => {
                     </UButton>
                     <div class="inline-flex items-center">
                         <span>Have account already?</span>
-                        <UButton color="primary" variant="link" to="/login">Login</UButton>
+                        <UButton color="primary" variant="link" to="/login">Sign in</UButton>
                     </div>
                 </div>
             </UForm>
