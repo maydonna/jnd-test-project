@@ -108,8 +108,8 @@ const onDelete = async (urlId: string) => {
             <h1 class="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">Shorten a long link</h1>
             <p class="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">Get your link shorten for free</p>
 
-            <UForm ref="form" :state="state" class="space-y-4 mt-16" @submit="onSubmit" @keydown.enter="onSubmit">
-                <UFormField label="Paste your destination link here" name="url" size="xl">
+            <UForm ref="form" :state="state" class="space-y-4 mt-12" @submit="onSubmit" @keydown.enter="onSubmit">
+                <UFormField name="url" size="xl">
                     <UInput
                         v-model="state.url"
                         placeholder="https://example.com/your-long-destination-url"
