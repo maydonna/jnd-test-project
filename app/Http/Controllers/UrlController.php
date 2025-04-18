@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Resources\UrlResource;
+use App\Models\Url;
+use AshAllenDesign\ShortURL\Classes\Builder;
+use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
+use AshAllenDesign\ShortURL\Models\ShortURL;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class UrlController extends Controller
+{
+    public function index(Request $request)
+    {
+        $userId = $request->query('user_id');
+        $perPage = $request->query('per_page', 5); //for publicly use 5
+
+        if($userId === 0) {
+            return response()->noContent();
+        }
+
+        $urls = Url::with('user')
+            ->when($userId, function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->withCount('visitors')
+            ->latest()
+            ->paginate($perPage);
+
+        return UrlResource::collection($urls);
+    }
+
+    /**
+     * @throws ShortURLException
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'url' => ['required', 'url'],
+        ]);
+
+        $shortURLObject = app(Builder::class)
+            ->destinationUrl($data['url'])
+            ->beforeCreate(function (ShortURL $model) use ($request): void {
+                $model->user_id = $request->user()->id;
+            })
+            ->make();
+
+        return response()->json([
+            'short_url' => $shortURLObject->default_short_url,
+        ])->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function show(Url $url)
+    {
+        //
+    }
+
+    public function destroy(Url $url)
+    {
+        $url->delete();
+
+        return response()->noContent();
+    }
+}

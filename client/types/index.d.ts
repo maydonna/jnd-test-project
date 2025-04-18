@@ -47,4 +47,14 @@ declare global {
     created_at: string
     updated_at: string
   }
+
+  interface Url {
+      readonly id: string
+      destination_url: string
+      url_key: string
+      default_short_url: string
+      visitors_count: number
+      created_at: string
+      updated_at: string
+  }
 }
