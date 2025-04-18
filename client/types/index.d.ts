@@ -64,4 +64,10 @@ declare global {
       icon: string
       current: string[]
   }
+
+    interface DashboardData {
+        users_count: number
+        urls_count: number
+        latest_urls: Url[]
+    }
 }

@@ -55,10 +55,8 @@ onBeforeMount(() => {
 
             <div class="flex-grow flex flex-col h-full">
                 <slot name="error" />
-                <main class="flex-grow h-full py-6">
-                    <UContainer>
-                        <slot></slot>
-                    </UContainer>
+                <main class="flex-grow h-full py-10 mx-10">
+                    <slot></slot>
                 </main>
             </div>
 
@@ -93,8 +91,6 @@ onBeforeMount(() => {
                 </div>
             </div>
         </div>
-
-
     </div>
 </template>
 

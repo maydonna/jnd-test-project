@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@nuxt/ui": "^3.0.2",
+    "echarts": "^5.6.0",
     "nuxt": "^3.16.2",
     "nuxt-auth-sanctum": "^0.6.6",
+    "nuxt-echarts": "^0.3.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },

@@ -40,7 +40,7 @@ const handlingLogout = async () => {
 
 <template>
     <header class="bg-(--ui-bg)" :class="isDashboard ? 'border-b border-gray-700 shadow-md' : ''">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between lg:px-8" :class="isDashboard ? 'p-2' : 'p-6'">
+        <nav class="flex items-center justify-between lg:px-8" :class="isDashboard ? 'p-2 mx-10' : 'p-6 max-w-7xl mx-auto'">
             <h1 v-if="!isDashboard" class="text-xl lg:2xl text-primary font-semibold">
                 <NuxtLink to="/" class="-m-1.5 p-1.5">
                     JND Test Project
