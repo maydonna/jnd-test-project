@@ -4,10 +4,7 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
-    modules: [
-        'nuxt-auth-sanctum',
-        '@nuxt/ui'
-    ],
+    modules: ['nuxt-auth-sanctum', '@nuxt/ui', 'nuxt-echarts'],
 
     sanctum: {
         baseUrl: 'http://localhost:8000/api', // Laravel API
@@ -16,11 +13,8 @@ export default defineNuxtConfig({
         }
     },
 
-    // vite: {
-    //     server: {
-    //         proxy: {
-    //             '/api': 'http://localhost:8000'
-    //         }
-    //     }
-    // }
+    echarts: {
+        charts: ['PieChart'],
+        components: ['TooltipComponent']
+    }
 })

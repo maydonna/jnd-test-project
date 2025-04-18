@@ -4,6 +4,7 @@
       position: 'top-right'
     }"
   >
+      <NuxtLoadingIndicator />
       <NuxtLayout>
           <NuxtPage />
       </NuxtLayout>

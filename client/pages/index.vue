@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useClipboard } from "@vueuse/core";
 import type { TableColumn } from '@nuxt/ui'
+import CopyToClipboardButton from "~/components/CopyToClipboardButton.vue";
 
 const user = useSanctumUser<Item<User>>()
 const client = useSanctumClient()
 const { successToast, errorToast } = useBasicToast()
-const { copy, isSupported } = useClipboard()
+
 const route = useRoute()
 
 const state = reactive({
@@ -72,6 +72,7 @@ const onSubmit = async () => {
                 body: state,
             })
             latestShortUrl.value = response.short_url
+            successToast('Successfully shorten your URL!')
             await refresh()
         } catch (err) {
             const error = handleApiError(err)
@@ -85,11 +86,6 @@ const onSubmit = async () => {
     } else {
         await navigateTo('/login')
     }
-}
-
-const onCopy = (url: string) => {
-    copy(url)
-    successToast('Copied!')
 }
 
 const onDelete = async (urlId: string) => {
@@ -150,15 +146,7 @@ const onDelete = async (urlId: string) => {
                             <a :href="row.original.default_short_url" target="_blank">
                                 {{ row.original.default_short_url }}
                             </a>
-                            <UButton
-                                v-if="isSupported"
-                                icon="i-lucide-copy"
-                                variant="link"
-                                color="neutral"
-                                size="sm"
-                                aria-label="Copy URL"
-                                @click.prevent="onCopy(row.original.default_short_url)"
-                            />
+                            <CopyToClipboardButton v-model="row.original.default_short_url" />
                         </div>
                     </template>
                     <template #destination_url-cell="{ row }">
