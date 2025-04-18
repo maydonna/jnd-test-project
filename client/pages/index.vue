@@ -72,6 +72,7 @@ const onSubmit = async () => {
                 body: state,
             })
             latestShortUrl.value = response.short_url
+            successToast('Successfully shorten your URL!')
             await refresh()
         } catch (err) {
             const error = handleApiError(err)

@@ -57,4 +57,11 @@ declare global {
       created_at: string
       updated_at: string
   }
+
+  interface NavigationItem {
+      name: string
+      href: string
+      icon: string
+      current: string[]
+  }
 }

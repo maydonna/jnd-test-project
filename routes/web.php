@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\UrlController;
+use App\Http\Middleware\OnlyAdmin;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
@@ -24,5 +26,9 @@ Route::prefix('api')->group(function () {
         Route::get('/urls', [UrlController::class, 'index'])->name('urls.index');
         Route::post('/urls', [UrlController::class, 'store'])->name('urls.store');
         Route::delete('/urls/{url}', [UrlController::class, 'destroy'])->name('urls.destroy');
+
+        Route::middleware(OnlyAdmin::class)->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        });
     });
 });
