@@ -1,6 +1,3 @@
-import type {TestimonialType, EducationLevel, EducationStatus, EmploymentType, MemberStatus, MemberRejectType, EmploymentWageUnit, JobPosition, JobStatus} from '~/types/enum'
-
-
 declare global {
   interface PaginationType {
     current_page: number
@@ -54,6 +51,8 @@ declare global {
       url_key: string
       default_short_url: string
       visitors_count: number
+      user: User
+      status: string
       created_at: string
       updated_at: string
   }

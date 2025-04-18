@@ -11,7 +11,7 @@ const sidebarNavigation = ref<NavigationItem[]>([
         current: ['dashboard'],
     },
     {
-        name: 'Url management',
+        name: 'URL management',
         href: '/dashboard/urls',
         icon: 'i-lucide-link',
         current: ['dashboard-urls', 'dashboard-urls-[uid]'],

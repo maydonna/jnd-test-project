@@ -43,7 +43,7 @@ const columns: TableColumn<Url>[] = [
 
 <template>
 <div>
-    <PageTitle title="Dashboard" />
+    <PageTitle>Dashboard</PageTitle>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <NuxtLink to="/dashboard/users">
             <UCard class="data-card interactive">
@@ -67,30 +67,32 @@ const columns: TableColumn<Url>[] = [
         </UCard>
         <UCard class="lg:col-span-3 data-card">
             <h4 class="font-medium mb-6">Latest URLs</h4>
-            <UTable
-                ref="table"
-                :data="data?.latest_urls"
-                :columns="columns"
-                :loading="status === 'pending'"
-            >
-                <template #default_short_url-cell="{ row }">
-                    <div class="inline-flex items-center">
-                        <a :href="row.original.default_short_url" target="_blank">
-                            {{ row.original.default_short_url }}
-                        </a>
-                        <CopyToClipboardButton v-model="row.original.default_short_url" />
-                    </div>
-                </template>
-                <template #destination_url-cell="{ row }">
-                    <div class="text-left max-w-xs truncate">
-                        <UTooltip :text="row.original.destination_url">
-                            <a :href="row.original.destination_url" target="_blank">
-                                {{ row.original.destination_url }}
+            <client-only>
+                <UTable
+                    ref="table"
+                    :data="data?.latest_urls"
+                    :columns="columns"
+                    :loading="status === 'pending'"
+                >
+                    <template #default_short_url-cell="{ row }">
+                        <div class="inline-flex items-center">
+                            <a :href="row.original.default_short_url" target="_blank">
+                                {{ row.original.default_short_url }}
                             </a>
-                        </UTooltip>
-                    </div>
-                </template>
-            </UTable>
+                            <CopyToClipboardButton v-model="row.original.default_short_url" />
+                        </div>
+                    </template>
+                    <template #destination_url-cell="{ row }">
+                        <div class="text-left max-w-xs truncate">
+                            <UTooltip :text="row.original.destination_url">
+                                <a :href="row.original.destination_url" target="_blank">
+                                    {{ row.original.destination_url }}
+                                </a>
+                            </UTooltip>
+                        </div>
+                    </template>
+                </UTable>
+            </client-only>
         </UCard>
     </div>
 </div>

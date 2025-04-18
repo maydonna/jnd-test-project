@@ -17,6 +17,8 @@ class UrlController extends Controller
     {
         $userId = $request->query('user_id');
         $perPage = $request->query('per_page', 5); //for publicly use 5
+        $sortKey = $request->query('sort_key', 'created_at');
+        $sortOrder = $request->query('sort_order', 'desc');
 
         if($userId === 0) {
             return response()->noContent();
@@ -27,7 +29,7 @@ class UrlController extends Controller
                 return $query->where('user_id', $userId);
             })
             ->withCount('visitors')
-            ->latest()
+            ->orderBy($sortKey, $sortOrder)
             ->paginate($perPage);
 
         return UrlResource::collection($urls);

@@ -25,6 +25,7 @@ class UrlResource extends JsonResource
             'default_short_url' => $this->default_short_url,
             'visitors_count' => $this->visitors_count ?? 0,
             'user' => new UserResource($this->user),
+            'status' => !!$this->deactivated_at ? 'deactivated' : 'active',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

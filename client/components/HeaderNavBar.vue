@@ -101,7 +101,7 @@ const handlingLogout = async () => {
                             <UButton to="/" variant="link" color="neutral" @click="closeSlideMenu">Home</UButton>
                             <UButton v-if="isLoggedIn && isAdmin" to="/dashboard" variant="link" color="neutral" @click="closeSlideMenu">Dashboard</UButton>
                             <UButton v-if="isLoggedIn" variant="link" color="neutral" trailing-icon="i-lucide-arrow-right" @click="handlingLogout">Sign out</UButton>
-                            <UButton v-else to="/login" trailing-icon="i-lucide-arrow-right" variant="link" @click="closeSlideMenu">Sign in</UButton>
+                            <UButton v-else to="/login" trailing-icon="i-lucide-arrow-right" variant="link" color="error" @click="closeSlideMenu">Sign in</UButton>
                         </div>
                     </template>
                 </USlideover>
@@ -128,7 +128,7 @@ const handlingLogout = async () => {
                             <div class="flex flex-col space-y-4 min-w-3xs p-4">
                                 <UButton v-if="isDashboard" to="/" variant="link" color="neutral" @click="closePopover">Home</UButton>
                                 <UButton v-if="isAdmin" to="/dashboard" variant="link" color="neutral" @click="closePopover">Dashboard</UButton>
-                                <UButton variant="link" color="neutral" trailing-icon="i-lucide-arrow-right" @click="handlingLogout">Sign out</UButton>
+                                <UButton variant="link" color="error" trailing-icon="i-lucide-arrow-right" @click="handlingLogout">Sign out</UButton>
                             </div>
                         </template>
                     </UPopover>
