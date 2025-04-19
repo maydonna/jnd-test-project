@@ -1,26 +1,22 @@
 <script setup lang="ts">
 import type {TableColumn} from "@nuxt/ui";
 import CopyToClipboardButton from "~/components/CopyToClipboardButton.vue";
+import formatDateTime from "~/utils/formatDateTime";
 
 definePageMeta({
     middleware: ['sanctum:auth', 'admin-only'],
 })
 
-const { data, status } = await useApiFetchCached<DashboardData>('/dashboard', { method: 'GET' })
+const adminPath = useAdminPath()
+
+const { data, status, refresh } = await useApiFetch<DashboardData>('/dashboard', { method: 'GET' })
 
 const columns: TableColumn<Url>[] = [
     {
         accessorKey: 'created_at',
         header: 'Created At',
         cell: ({ row }) => {
-            return new Date(row.getValue('created_at')).toLocaleString('en-EN', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            })
+            return formatDateTime(row.getValue('created_at'))
         }
     },
     {
@@ -39,20 +35,35 @@ const columns: TableColumn<Url>[] = [
         }
     }
 ]
+
+const latestUpdatedAt = computed(() => formatDateTime(data.value?.latest_updated_at))
 </script>
 
 <template>
 <div>
-    <PageTitle>Dashboard</PageTitle>
+    <div class="flex justify-between items-center space-x-10">
+        <PageTitle>Dashboard</PageTitle>
+        <div class="flex items-center space-x-4">
+            <span class="text-sm">latest update: {{ latestUpdatedAt }}</span>
+            <UButton
+                icon="i-lucide-refresh-ccw"
+                color="neutral"
+                variant="subtle"
+                :loading="status === 'pending'"
+                @click="refresh()"
+            />
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <NuxtLink to="/dashboard/users">
+        <NuxtLink :to="adminPath.get('users')">
             <UCard class="data-card interactive">
                 <UIcon name="i-lucide-users-round" class="size-10 shrink-0" />
                 <h4 class="font-medium mb-6">Users</h4>
                 <p class="text-3xl lg:text-5xl text-(--ui-primary) font-semibold">{{ data?.users_count }}</p>
             </UCard>
         </NuxtLink>
-        <NuxtLink to="/dashboard/urls">
+        <NuxtLink :to="adminPath.get('urls')">
             <UCard class="data-card interactive">
                 <UIcon name="i-lucide-link" class="size-10 shrink-0" />
                 <h4 class="font-medium mb-6">URLs</h4>

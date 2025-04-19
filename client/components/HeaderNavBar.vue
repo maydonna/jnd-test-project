@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type {DropdownMenuItem} from "@nuxt/ui";
+
 interface Props {
     isDashboard?: boolean
     sidebarNavigation?: NavigationItem[]
     selectedCurrent?: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     isDashboard: false,
     sidebarNavigation: [],
     selectedCurrent: ''
@@ -21,6 +23,26 @@ const openSlideMenu = ref(false)
 const isGuestOnly = computed(() => ['login', 'register'].indexOf(route?.name) === -1)
 const isAdmin = computed(() => user.value?.data.role === 'admin')
 const isLoggedIn = computed(() => !!user.value)
+
+const navItems: DropdownMenuItem[] = filteringDropdownMenu([
+    [{
+        label: 'Home',
+        icon: 'i-lucide-house',
+        to: '/',
+        visible: props.isDashboard
+    }, {
+        label: 'Dashboard',
+        icon: 'i-lucide-layout-dashboard',
+        to: '/admin/dashboard',
+        visible: isAdmin.value
+    }],
+    [{
+        label: 'Sign out',
+        icon: 'i-lucide-arrow-right',
+        color: 'error',
+        onSelect: () => handlingLogout()
+    }]
+])
 
 const closePopover = () => {
     openPopover.value = false
@@ -99,7 +121,7 @@ const handlingLogout = async () => {
                     <template #body>
                         <div class="flex flex-col space-y-4">
                             <UButton to="/" variant="link" color="neutral" @click="closeSlideMenu">Home</UButton>
-                            <UButton v-if="isLoggedIn && isAdmin" to="/dashboard" variant="link" color="neutral" @click="closeSlideMenu">Dashboard</UButton>
+                            <UButton v-if="isLoggedIn && isAdmin" to="/admin/dashboard" variant="link" color="neutral" @click="closeSlideMenu">Dashboard</UButton>
                             <UButton v-if="isLoggedIn" variant="link" color="neutral" trailing-icon="i-lucide-arrow-right" @click="handlingLogout">Sign out</UButton>
                             <UButton v-else to="/login" trailing-icon="i-lucide-arrow-right" variant="link" color="error" @click="closeSlideMenu">Sign in</UButton>
                         </div>
@@ -109,12 +131,15 @@ const handlingLogout = async () => {
 
             <div class="hidden lg:flex lg:gap-x-12">
                 <div v-if="user">
-                    <UPopover
-                        v-model:open="openPopover"
+                    <UDropdownMenu
+                        :items="navItems"
                         :content="{
-                          align: 'end',
                           side: 'bottom',
-                          sideOffset: 8
+                          align: 'end',
+                          sideOffset: -6
+                        }"
+                        :ui="{
+                          content: 'w-48',
                         }"
                         arrow
                     >
@@ -123,15 +148,7 @@ const handlingLogout = async () => {
                             <span class="ml-2">{{ user?.data.name }}</span>
                             <UIcon name="i-lucide-chevron-down" />
                         </UButton>
-
-                        <template #content>
-                            <div class="flex flex-col space-y-4 min-w-3xs p-4">
-                                <UButton v-if="isDashboard" to="/" variant="link" color="neutral" @click="closePopover">Home</UButton>
-                                <UButton v-if="isAdmin" to="/dashboard" variant="link" color="neutral" @click="closePopover">Dashboard</UButton>
-                                <UButton variant="link" color="error" trailing-icon="i-lucide-arrow-right" @click="handlingLogout">Sign out</UButton>
-                            </div>
-                        </template>
-                    </UPopover>
+                    </UDropdownMenu>
                 </div>
                 <UButton v-else-if="isGuestOnly" to="/login" trailing-icon="i-lucide-arrow-right">Sign in</UButton>
             </div>

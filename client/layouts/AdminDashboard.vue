@@ -2,25 +2,26 @@
 import HeaderNavBar from "~/components/HeaderNavBar.vue";
 
 const route = useRoute()
+const adminPath = useAdminPath()
 
 const sidebarNavigation = ref<NavigationItem[]>([
     {
         name: 'Dashboard',
-        href: '/dashboard',
+        href: adminPath.get('dashboard'),
         icon: 'i-lucide-layout-dashboard',
-        current: ['dashboard'],
+        current: ['admin-dashboard'],
     },
     {
         name: 'URL management',
-        href: '/dashboard/urls',
+        href: adminPath.get('urls'),
         icon: 'i-lucide-link',
-        current: ['dashboard-urls', 'dashboard-urls-[uid]'],
+        current: ['admin-urls', 'admin-urls-[uid]'],
     },
     {
         name: 'User management',
-        href: '/dashboard/users',
+        href: adminPath.get('users'),
         icon: 'i-lucide-users-round',
-        current: ['dashboard-users', 'dashboard-users-[uid]', 'dashboard-users-create', 'dashboard-users-[uid]-edit'],
+        current: ['admin-users', 'admin-users-[uid]', 'admin-users-create', 'admin-users-[uid]-edit'],
     },
 ])
 
@@ -55,7 +56,7 @@ onBeforeMount(() => {
 
             <div class="flex-grow flex flex-col h-full">
                 <slot name="error" />
-                <main class="flex-grow h-full py-10 mx-10">
+                <main class="flex-grow h-full py-10 mx-6 lg:mx-10">
                     <slot></slot>
                 </main>
             </div>

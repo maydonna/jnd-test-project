@@ -20,6 +20,6 @@ export default defineAppConfig({
             slots: {
                 content: 'bg-(--ui-bg-elevated)'
             }
-        }
+        },
     }
 })
