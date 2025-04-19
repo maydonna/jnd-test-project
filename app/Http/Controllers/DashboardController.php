@@ -13,6 +13,12 @@ class DashboardController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
+        $isFresh = $request->query('fresh', false);
+
+        if($isFresh) {
+            Cache::forget('dashboard_data');
+        }
+
         $ttl = 60 * 10; // 10 minutes
         $data = Cache::remember('dashboard_data', $ttl, function () {
             $urlQuery = Url::query();
@@ -21,7 +27,7 @@ class DashboardController extends Controller
             return [
                 'users_count' => $userQuery->count(),
                 'urls_count' => $urlQuery->count(),
-                'latest_urls' => UrlResource::collection($urlQuery->latest()->take(5)->get()),
+                'latest_urls' => UrlResource::collection($urlQuery->withCount('visitors')->latest()->take(5)->get()),
                 'latest_updated_at' => now(),
             ];
         });

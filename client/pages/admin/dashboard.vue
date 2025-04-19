@@ -8,8 +8,14 @@ definePageMeta({
 })
 
 const adminPath = useAdminPath()
+const query = reactive({
+    fresh: undefined
+})
 
-const { data, status, refresh } = await useApiFetch<DashboardData>('/dashboard', { method: 'GET' })
+const { data, status, refresh } = await useApiFetch<DashboardData>('/dashboard', {
+    query: query,
+    watch: false,
+})
 
 const columns: TableColumn<Url>[] = [
     {
@@ -37,6 +43,12 @@ const columns: TableColumn<Url>[] = [
 ]
 
 const latestUpdatedAt = computed(() => formatDateTime(data.value?.latest_updated_at))
+
+const onFresh = async () => {
+    query.fresh = 1
+    await refresh()
+    query.fresh = undefined
+}
 </script>
 
 <template>
@@ -44,13 +56,13 @@ const latestUpdatedAt = computed(() => formatDateTime(data.value?.latest_updated
     <div class="flex justify-between items-center space-x-10">
         <PageTitle>Dashboard</PageTitle>
         <div class="flex items-center space-x-4">
-            <span class="text-sm">latest update: {{ latestUpdatedAt }}</span>
+            <span class="text-sm">Latest update: {{ latestUpdatedAt }}</span>
             <UButton
                 icon="i-lucide-refresh-ccw"
                 color="neutral"
                 variant="subtle"
                 :loading="status === 'pending'"
-                @click="refresh()"
+                @click="onFresh"
             />
         </div>
     </div>

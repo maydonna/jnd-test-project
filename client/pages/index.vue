@@ -30,14 +30,7 @@ const columns: TableColumn<Url>[] = [
         accessorKey: 'created_at',
         header: 'Created At',
         cell: ({ row }) => {
-            return new Date(row.getValue('created_at')).toLocaleString('en-EN', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            })
+            return formatDateTime(row.getValue('created_at'))
         }
     },
     {
