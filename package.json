@@ -4,7 +4,8 @@
     "scripts": {
         "build": "cd client && nuxt build",
         "dev": "cd client && nuxt dev",
-        "postinstall": "cd client && nuxt prepare"
+        "start": "cd client && node .output/server/index.mjs",
+        "postinstall": "cd client && npm install && nuxt prepare"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
