@@ -29,3 +29,7 @@ Mini project for JND recruitment testing
 7. Run `php artisan serve`
 8. `cd client` to go to client folder and run `npm install`
 9. Run `npm run dev` (or you can just run `npm run dev` on the root folder for the next time)
+
+### Admin account for test
+- email: `admin@example.com`
+- password: `secret`
