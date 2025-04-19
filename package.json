@@ -2,8 +2,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "cd client && nuxt dev"
+        "build": "cd client && nuxt build",
+        "dev": "cd client && nuxt dev",
+        "postinstall": "cd client && nuxt prepare"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
