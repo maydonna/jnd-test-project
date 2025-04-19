@@ -24,7 +24,10 @@ Route::prefix('api')->group(function () {
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
         Route::get('/urls', [UrlController::class, 'index'])->name('urls.index');
+        Route::get('/urls/{url}', [UrlController::class, 'show'])->name('urls.show');
+        Route::get('/urls/{url}/visitors', [UrlController::class, 'visitors'])->name('urls.visitors.index');
         Route::post('/urls', [UrlController::class, 'store'])->name('urls.store');
+        Route::patch('/urls/{url}', [UrlController::class, 'update'])->name('urls.update');
         Route::delete('/urls/{url}', [UrlController::class, 'destroy'])->name('urls.destroy');
 
         Route::middleware(OnlyAdmin::class)->group(function () {

@@ -3,7 +3,9 @@
 </script>
 
 <template>
-<h1>URLS</h1>
+    <dl v-bind="$attrs">
+        <slot></slot>
+    </dl>
 </template>
 
 <style scoped>

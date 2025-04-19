@@ -1,5 +1,4 @@
-import type {TestimonialType, EducationLevel, EducationStatus, EmploymentType, MemberStatus, MemberRejectType, EmploymentWageUnit, JobPosition, JobStatus} from '~/types/enum'
-
+import type {DropdownMenuItem} from "@nuxt/ui";
 
 declare global {
   interface PaginationType {
@@ -49,13 +48,27 @@ declare global {
   }
 
   interface Url {
-      readonly id: string
+      readonly id: string|number
       destination_url: string
       url_key: string
       default_short_url: string
-      visitors_count: number
+      visitors_count?: number
+      status: string
+      user?: User
       created_at: string
       updated_at: string
+  }
+
+  interface Visitor {
+      readonly id: string|number
+      readonly short_url_id: string|number
+      readonly browser: string
+      readonly device_type: string
+      readonly ip_address: string
+      readonly operating_system: string
+      readonly visited_at: string
+      readonly created_at: string
+      readonly updated_at: string
   }
 
   interface NavigationItem {
@@ -65,9 +78,14 @@ declare global {
       current: string[]
   }
 
-    interface DashboardData {
-        users_count: number
-        urls_count: number
-        latest_urls: Url[]
-    }
+  interface DashboardData {
+      users_count: number
+      urls_count: number
+      latest_urls: Url[]
+      latest_updated_at: string
+  }
+
+  interface FilterDropdownMenuItem extends DropdownMenuItem {
+      visible?: boolean
+  }
 }

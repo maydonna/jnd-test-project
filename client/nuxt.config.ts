@@ -15,6 +15,6 @@ export default defineNuxtConfig({
 
     echarts: {
         charts: ['PieChart'],
-        components: ['TooltipComponent']
+        components: ['TooltipComponent', 'LegendComponent']
     }
 })
