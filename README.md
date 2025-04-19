@@ -5,6 +5,7 @@ Mini project for JND recruitment testing
 ## Framework & Tools used
 
 - Laravel 12
+- Nuxt 3
 
 # Development
 
