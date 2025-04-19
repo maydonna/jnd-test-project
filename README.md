@@ -4,7 +4,7 @@ Mini project for JND recruitment testing
 
 ## Framework & Tools used
 
-- Laravel 11
+- Laravel 12
 
 # Development
 
