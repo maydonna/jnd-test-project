@@ -23,7 +23,7 @@ class UrlResource extends JsonResource
             'destination_url' => $this->destination_url,
             'url_key' => $this->url_key,
             'default_short_url' => $this->default_short_url,
-            'visitors_count' => $this->when($request->routeIs('urls.index'), function () {
+            'visitors_count' => $this->when($request->routeIs('urls.index', 'dashboard'), function () {
                 return $this->visitors_count ?? 0;
             }),
             'status' => !!$this->deactivated_at ? 'deactivated' : 'active',

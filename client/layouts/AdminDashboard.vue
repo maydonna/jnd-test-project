@@ -21,7 +21,7 @@ const sidebarNavigation = ref<NavigationItem[]>([
         name: 'User management',
         href: adminPath.get('users'),
         icon: 'i-lucide-users-round',
-        current: ['admin-users', 'admin-users-[uid]', 'admin-users-create', 'admin-users-[uid]-edit'],
+        current: ['admin-users'],
     },
 ])
 
