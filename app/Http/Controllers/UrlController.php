@@ -10,6 +10,7 @@ use AshAllenDesign\ShortURL\Exceptions\ShortURLException;
 use AshAllenDesign\ShortURL\Models\ShortURL;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class UrlController extends Controller
@@ -75,6 +76,8 @@ class UrlController extends Controller
 
     public function update(Url $url): UrlResource
     {
+        Gate::authorize('update', $url);
+
         $url->deactivated_at = !!$url->deactivated_at ? null : now();
         $url->save();
 
@@ -83,6 +86,8 @@ class UrlController extends Controller
 
     public function destroy(Url $url)
     {
+        Gate::authorize('delete', $url);
+
         $url->delete();
 
         return response()->noContent();
