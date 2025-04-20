@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use Illuminate\Support\Facades\File;
 
-Route::get('/{any}', function () {
-    return File::get(public_path('client/dist/index.html'));
-})->where('any', '.*');
-
 Route::prefix('api')->group(function () {
     Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show'])->name('csrf');
 
@@ -43,3 +39,7 @@ Route::prefix('api')->group(function () {
         });
     });
 });
+
+Route::get('/{any}', function () {
+    return File::get(public_path('client/.output/index.mjs'));
+})->where('any', '.*');
