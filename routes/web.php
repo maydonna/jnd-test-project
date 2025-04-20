@@ -41,5 +41,5 @@ Route::prefix('api')->group(function () {
 });
 
 Route::get('/{any}', function () {
-    return File::get(public_path('client/.output/index.mjs'));
+    return File::get(public_path('../client/.output/index.mjs'));
 })->where('any', '.*');
